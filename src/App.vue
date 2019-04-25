@@ -2,53 +2,56 @@
   <div id="app">
     <h1>
       My todos
-      <span class="info">({{ remaining.length }}/{{ todos.length }})</span>
     </h1>
-    <ul>
+    <!-- <ul>
       <ToDoItem v-for="todo in todos" :todo="todo" v-bind:key="todo.id" @delete="deleteTodo" />
-    </ul>
-    <form @submit.prevent="addTodo">
+    </ul> -->
+    <SearchForm v-model="searchFormData" :searchFormData="searchFormData" />
+    <!-- <input type="text" v-model="searchFormData.placeName">
+    <el-date-picker v-model="searchFormData.checkInDate" type="datetime" placeholder="チェックインの日付"></el-date-picker>
+    <el-date-picker v-model="searchFormData.checkOutDate" type="datetime" placeholder="チェックアウトの日付"></el-date-picker> -->
+    <!-- <form @submit.prevent="addTodo">
       <input type="text" v-model="newTodo">
       <input type="submit" value="Add">
-    </form>
+    </form> -->
   </div>
 </template>
 
 
 <script>
-import ToDoItem from './components/ToDoItem.vue'
+import SearchForm from './components/SearchForm.vue'
 
 export default {
   name: 'app',
   components: {
-    ToDoItem
+    SearchForm
   },
   data() {
     return {
-      todos: [
-        { id: 1, text: 'dataを表示する', isDone: false },
-        { id: 2, text: 'ディレクティブをしる', isDone: false }
-      ],
-      newTodo: ''
-    }
-  },
-  methods: {
-    addTodo: function() {
-      const newId = Math.max.apply(null, this.todos.map(t => t.id)) + 1;
-      this.todos.push({ id: newId, text: this.newTodo });
-      this.newTodo = '';
-    },
-    deleteTodo: function(todo) {
-      this.todos = this.todos.filter(item => item !== todo);
-    },
-  },
-  computed: {
-    remaining: function() {
-      return this.todos.filter(function(todo) {
-        return !todo.isDone;
-      });
+      searchFormData: {
+        placeName: '',
+        checkInDate: '',
+        checkOutDate: ''
+      }
     }
   }
+  // methods: {
+  //   addTodo: function() {
+  //     const newId = Math.max.apply(null, this.todos.map(t => t.id)) + 1;
+  //     this.todos.push({ id: newId, text: this.newTodo });
+  //     this.newTodo = '';
+  //   },
+  //   deleteTodo: function(todo) {
+  //     this.todos = this.todos.filter(item => item !== todo);
+  //   },
+  // },
+  // computed: {
+  //   remaining: function() {
+  //     return this.todos.filter(function(todo) {
+  //       return !todo.isDone;
+  //     });
+  //   }
+  // }
 }
 </script>
 
