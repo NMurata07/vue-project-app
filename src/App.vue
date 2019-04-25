@@ -1,10 +1,7 @@
 <template>
   <div id="app">
     <ul>
-      <li v-for="todo in todos" v-bind:key="todo.id">
-        <span> {{ todo.text }}</span>
-        <span @click="deleteTodo(todo)">[x]</span>
-      </li>
+      <ToDoItem v-for="todo in todos" :todo="todo" v-bind:key="todo.id" @delete="deleteTodo" />
     </ul>
     <form @submit.prevent="addTodo">
       <input type="text" v-model="newTodo">
@@ -13,9 +10,15 @@
   </div>
 </template>
 
+
 <script>
+import ToDoItem from './components/ToDoItem.vue'
+
 export default {
   name: 'app',
+  components: {
+    ToDoItem
+  },
   data() {
     return {
       todos: [
