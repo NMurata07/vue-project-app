@@ -1,5 +1,9 @@
 <template>
   <div id="app">
+    <h1>
+      My todos
+      <span class="info">({{ remaining.length }}/{{ todos.length }})</span>
+    </h1>
     <ul>
       <ToDoItem v-for="todo in todos" :todo="todo" v-bind:key="todo.id" @delete="deleteTodo" />
     </ul>
@@ -22,8 +26,8 @@ export default {
   data() {
     return {
       todos: [
-        { id: 1, text: 'dataを表示する' },
-        { id: 2, text: 'ディレクティブをしる' }
+        { id: 1, text: 'dataを表示する', isDone: false },
+        { id: 2, text: 'ディレクティブをしる', isDone: false }
       ],
       newTodo: ''
     }
@@ -36,6 +40,13 @@ export default {
     },
     deleteTodo: function(todo) {
       this.todos = this.todos.filter(item => item !== todo);
+    },
+  },
+  computed: {
+    remaining: function() {
+      return this.todos.filter(function(todo) {
+        return !todo.isDone;
+      });
     }
   }
 }
